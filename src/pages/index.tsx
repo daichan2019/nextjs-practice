@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, SetStateAction } from 'react';
 import type { Query } from '@favware/graphql-pokemon';
 import { request, gql } from 'graphql-request'
 
@@ -19,13 +19,19 @@ const query = gql`
 `
 
 export default function Pages() {
+  const [state, setState] = useState<GraphQLPokemonResponse<"getPokemon">>()
+
   useEffect(() => {
-    request<GraphQLPokemonResponse<'getPokemon'>>('https://graphqlpokemon.favware.tech/v7', query).then((data) => console.log(data.getPokemon))
+    request<GraphQLPokemonResponse<'getPokemon'>>('https://graphqlpokemon.favware.tech/v7', query).then((data) =>  {
+      console.log(data)
+      setState(data)
+    })
   }, []);
 
   return (
     <div>
-      TOP Page
+      <p>TOP Page</p>
+      <p>{JSON.stringify(state)}</p>
     </div>
   )
 }
