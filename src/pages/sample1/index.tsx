@@ -18,7 +18,7 @@ const query = gql`
 }
 `
 
-export default function Old() {
+export default function Sample1() {
   const [state, setState] = useState<GraphQLPokemonResponse<"getPokemon">>()
 
   useEffect(() => {

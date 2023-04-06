@@ -1,6 +1,5 @@
 import type { Query } from '@favware/graphql-pokemon';
 import { request } from 'graphql-request'
-import useSWR from 'swr'
 import { GetServerSideProps } from 'next'
 
 type GraphQLPokemonResponse<K extends keyof Omit<Query, '__typename'>> = Record<
@@ -19,11 +18,12 @@ const query = `
 }
 `
 
-export type Page1Props = {
+// InferGetServerSidePropsTypeを使っても良さげ??
+export type Sample2Props = {
   data: GraphQLPokemonResponse<'getPokemon'>
 }
 
-export default function Page1({data}: Page1Props ) {
+export default function Sample2({data}: Sample2Props) {
   return (
     <div>
       <p>TOP Page</p>
@@ -32,7 +32,7 @@ export default function Page1({data}: Page1Props ) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Page1Props> = async (context) => {
+export const getServerSideProps: GetServerSideProps<Sample2Props> = async (context) => {
   const data = await request<GraphQLPokemonResponse<'getPokemon'>>('https://graphqlpokemon.favware.tech/v7', query)
 
   // const data = 'hoge'
